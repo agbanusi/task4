@@ -74,71 +74,7 @@ def credit():
     Grid_model_result = Grid_model.fit(X, y)
     BEST_SCORE, BEST_PARAMS = Grid_model_result.best_score_, Grid_model_result.best_params_
     print("Best: %f using %s" %  (BEST_SCORE, BEST_PARAMS))
-    
-    #Try some classifiers
-    def other(y_test):
-        #decision trees
-        from sklearn.tree import DecisionTreeClassifier
-        dtree=DecisionTreeClassifier()
-        dtree.fit(X_train,y_train)
-        pred3 = dtree.predict(X_test)
-        pred3 = pred3.astype(dtype='int64')
-        pred4 = labelencoder.inverse_transform(pred3)
-        #random forest
-        from sklearn.ensemble import RandomForestClassifier
-        error_rate=[]
-        if len(y_tester) <150:
-          for i in range(1,len(y_test)):
-            rfc = RandomForestClassifier(n_estimators=i)
-            rfc.fit(X_train,y_train)
-            pred_i = rfc.predict(X_test)
-            error_rate.append(np.mean(pred_i!=y_test))
-        else:
-          for i in range(1,150):
-            rfc = RandomForestClassifier(n_estimators=i)
-            rfc.fit(X_train,y_train)
-            pred_i = rfc.predict(X_test)
-            error_rate.append(np.mean(pred_i!=y_test))
-        nm = error_rate.index(min(error_rate))
-        rfc = RandomForestClassifier(n_estimators=(nm+1))
-        rfc.fit(X_train,y_train)
-        pred5 = rfc.predict(X_test)
-        pred5 = pred5.astype(dtype='int64')
-        pred6 = labelencoder.inverse_transform(pred5)
-        #trees
-        from sklearn.tree import DecisionTreeClassifier
-        dtree=DecisionTreeClassifier()
-        dtree.fit(X_train,y_train)
-        pred7 = dtree.predict(X_test)
-        pred7 = pred7.astype(dtype='int64')
-        pred8 = labelencoder.inverse_transform(pred7)
-        
-        #results of the prediction
-        from sklearn.metrics import classification_report
-        print('Classification Report for trees: ','\n',classification_report(y_test,pred8))
-        print('\n')
-        from sklearn.metrics import classification_report
-        print('Classification Report for decision trees: ','\n',classification_report(y_test,pred4))
-        print('\n')
-        from sklearn.metrics import classification_report
-        print('Classification Report for random forest: ','\n',classification_report(y_test,pred6))
-        print('\n')
-        from sklearn.metrics import accuracy_score
-        print('Accuracy Score for trees is:', accuracy_score(y_test,pred8))
-        print('\n')
-        from sklearn.metrics import accuracy_score
-        print('Accuracy Score for decision trees is:', accuracy_score(y_test,pred4))
-        print('\n')
-        from sklearn.metrics import accuracy_score
-        print('Accuracy Score for random forest is:', accuracy_score(y_test,pred6))
-        print('\n')
-        #get an input ans for grid search
-    ans = input('Do you want to do a grid search for a better model?, it could take a while. Type y/n or yes/no: ')
-    if ans == 'y' or ans == 'yes':
-        other(y_tester)
-    else:
-        print('end')
-            
+               
 if __name__=='__main__':
     credit()               
 
